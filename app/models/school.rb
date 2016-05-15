@@ -1,4 +1,5 @@
 class School < ActiveRecord::Base
-  has_many :students , dependent: :destroy
-  has_and_belongs_to_many :teachers
+  has_many :classrooms
+  has_many :teachers, through: :classrooms
+  has_many :students, through: :classrooms
 end

@@ -11,16 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160514161846) do
+ActiveRecord::Schema.define(version: 20160513134052) do
 
   create_table "classrooms", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
     t.integer  "student_id", limit: 4
     t.integer  "teacher_id", limit: 4
+    t.integer  "school_id",  limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
+  add_index "classrooms", ["school_id"], name: "index_classrooms_on_school_id", using: :btree
   add_index "classrooms", ["student_id"], name: "index_classrooms_on_student_id", using: :btree
   add_index "classrooms", ["teacher_id"], name: "index_classrooms_on_teacher_id", using: :btree
 
@@ -36,22 +38,11 @@ ActiveRecord::Schema.define(version: 20160514161846) do
     t.datetime "updated_at",             null: false
   end
 
-  create_table "schools_teachers", id: false, force: :cascade do |t|
-    t.integer "teacher_id", limit: 4
-    t.integer "school_id",  limit: 4
-  end
-
-  add_index "schools_teachers", ["school_id"], name: "index_schools_teachers_on_school_id", using: :btree
-  add_index "schools_teachers", ["teacher_id"], name: "index_schools_teachers_on_teacher_id", using: :btree
-
   create_table "students", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
-    t.integer  "school_id",  limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
-
-  add_index "students", ["school_id"], name: "index_students_on_school_id", using: :btree
 
   create_table "teachers", force: :cascade do |t|
     t.string   "name",                  limit: 255, null: false
